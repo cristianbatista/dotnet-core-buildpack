@@ -42,14 +42,16 @@ if [ -z ${PROJECT_NAME:-} ]; then
 	PROJECT_NAME=$(basename ${PROJECT_FILE%.*})
 fi
 
-
 echo "----------------------------------------------------------------------------------------------------------------------"
 echo "publish: dotnet publish $PROJECT_FILE --output ${BUILD_DIR}/heroku_output --configuration Release --runtime linux-x64 "
 echo "----------------------------------------------------------------------------------------------------------------------"
 dotnet publish $PROJECT_FILE --output ${BUILD_DIR}/publish --configuration Release --runtime linux-x64
 
 echo "----------------------------------------------------------------------------------------------------------------------"
-echo "migrate DB: $(dirname $PROJECT_FILE) dotnet ef database update -------------------------------------------------------"
+echo "migrate DB: $(dirname $PROJECT_FILE) dotnet ef database update "
 echo "----------------------------------------------------------------------------------------------------------------------"
 cd $(dirname "${PROJECT_FILE}") && dotnet ef database update
 #echo "`ls -d /app/*`"
+
+echo "remove directory unnecessary"
+find -maxdepth 1 ! -name publish ! -name . -exec rm -rv {} \;
