@@ -54,4 +54,4 @@ cd $(dirname "${PROJECT_FILE}") && dotnet ef database update
 #echo "`ls -d /app/*`"
 
 echo "remove directory unnecessary"
-find -maxdepth 1 ! -name publish ! -name . -exec rm -rv {} \;
+find -maxdepth 1 ! -name publish ! -name dotnet ! -name . -exec rm -rv {} \;
